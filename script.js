@@ -11,6 +11,7 @@ const buttons = document.querySelectorAll('button')
 const operatorButtons = document.getElementsByClassName('operator-buttons')
 const equalSign = document.getElementById('equal-sign')
 let numberList = []
+let equation = []
 let first = 0
 let second = 0
 let currentOperator = ''
@@ -45,9 +46,10 @@ for (let i = 0; i < 10; i++){
     })
 }
 
-for (button of operatorButtons){
-    button.addEventListener('click', () => {
-        display.value = ''
+for (let i = 0; i < operatorButtons.length; i++){
+    operatorButtons[i].addEventListener('click', () => {
+        currentOperator = operatorButtons[i].id
+        console.log(currentOperator)
     })
 }
 
