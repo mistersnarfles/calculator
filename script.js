@@ -8,8 +8,12 @@ const clear = document.getElementById('clear')
 const display = document.getElementById('display')
 const results = document.getElementById('results')
 const buttons = document.querySelectorAll('button')
-
+const operatorButtons = document.getElementsByClassName('operator-buttons')
+const equalSign = document.getElementById('equal-sign')
 let numberList = []
+let first = 0
+let second = 0
+let currentOperator = ''
 
 function add(a, b){
     return a + b
@@ -37,7 +41,13 @@ for (let i = 0; i < 10; i++){
     numberList.push(button.textContent)
     buttonContainer.appendChild(button)
     button.addEventListener('click', () => {
-        display.value += 'test'
+        display.value += i
+    })
+}
+
+for (button of operatorButtons){
+    button.addEventListener('click', () => {
+        display.value = ''
     })
 }
 
