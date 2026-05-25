@@ -7,9 +7,9 @@ const header = document.querySelector('h1')
 const clear = document.getElementById('clear')
 const display = document.getElementById('display')
 const results = document.getElementById('results')
+const buttons = document.querySelectorAll('button')
 
 let numberList = []
-
 
 function add(a, b){
     return a + b
@@ -33,16 +33,24 @@ function operate(operator, a, b){
 
 for (let i = 0; i < 10; i++){
     const button = document.createElement('button')
-    numberList.push(button)
     button.textContent = i
+    numberList.push(button.textContent)
     buttonContainer.appendChild(button)
     button.addEventListener('click', () => {
-        display.textContent = i
-        header.appendChild(display)
+        display.value += 'test'
     })
 }
 
+/*
+for (button of buttons){
+    button.addEventListener('click', () => {
+        
+    })
+}
+*/ 
+
 clear.addEventListener('click', () => {
-    header.removeChild(display)
+    display.value = ''
 })
+
 
