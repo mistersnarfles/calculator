@@ -54,12 +54,15 @@ for (let i = 0; i < operatorButtons.length; i++){
 
 equalSign.addEventListener('click', () => {
     secondNumber = display.value
-    /*
     if (currentOperator == 'add') {
         display.value = operate(add, Number(firstNumber), Number(secondNumber))
+    } else if (currentOperator == 'subtract') {
+        display.value = operate(subtract, Number(firstNumber), Number(secondNumber))
+    } else if (currentOperator == 'multiply') {
+        display.value = operate(multiply, Number(firstNumber), Number(secondNumber))
+    } else if (currentOperator == 'divide') {
+        display.value = operate(divide, Number(firstNumber), Number(secondNumber))
     }
-    */
-    display.value = operate(currentOperator, firstNumber, secondNumber)
 })
 /*
 for (button of buttons){
