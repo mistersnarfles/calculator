@@ -1,7 +1,3 @@
-let firstNumber
-let operator
-let secondNumber
-
 const buttonContainer = document.getElementById('button-container')
 const header = document.querySelector('h1')
 const clear = document.getElementById('clear')
@@ -12,8 +8,8 @@ const operatorButtons = document.getElementsByClassName('operator-buttons')
 const equalSign = document.getElementById('equal-sign')
 let numberList = []
 let equation = []
-let first = 0
-let second = 0
+let firstNumber = 0
+let secondNumber = 0
 let currentOperator = ''
 
 function add(a, b){
@@ -49,10 +45,22 @@ for (let i = 0; i < 10; i++){
 for (let i = 0; i < operatorButtons.length; i++){
     operatorButtons[i].addEventListener('click', () => {
         currentOperator = operatorButtons[i].id
+        firstNumber = display.value
+        display.value = ''
         console.log(currentOperator)
+        console.log(firstNumber)
     })
 }
 
+equalSign.addEventListener('click', () => {
+    secondNumber = display.value
+    /*
+    if (currentOperator == 'add') {
+        display.value = operate(add, Number(firstNumber), Number(secondNumber))
+    }
+    */
+    display.value = operate(currentOperator, firstNumber, secondNumber)
+})
 /*
 for (button of buttons){
     button.addEventListener('click', () => {
