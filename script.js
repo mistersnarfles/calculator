@@ -8,9 +8,10 @@ const operatorButtons = document.getElementsByClassName('operator-buttons')
 const equalSign = document.getElementById('equal-sign')
 let numberList = []
 let equation = []
-let firstNumber = 0
-let secondNumber = 0
-let currentOperator = ''
+let firstNumber
+let secondNumber
+let currentOperator
+let calculation = []
 
 function add(a, b){
     return a + b
@@ -38,19 +39,25 @@ for (let i = 0; i < 10; i++){
     numberList.push(button.textContent)
     buttonContainer.appendChild(button)
     button.addEventListener('click', () => {
+        display.value = ''
         display.value += i
     })
 }
 
+let operatorCount = 0
 for (let i = 0; i < operatorButtons.length; i++){
-    operatorButtons[i].addEventListener('click', () => {
-        currentOperator = operatorButtons[i].id
-        firstNumber = display.value
-        display.value = ''
-        console.log(currentOperator)
-        console.log(firstNumber)
-    })
+        operatorButtons[i].addEventListener('click', () => {
+            currentOperator = operatorButtons[i].id
+            equation.push(Number(display.value))
+
+            if (equation.length > 1){
+                equation.reduce((a, b) => display.value = a + b)
+                equation = []
+            }
+            console.log(equation)
+        })
 }
+
 
 equalSign.addEventListener('click', () => {
     secondNumber = display.value
