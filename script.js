@@ -10,7 +10,7 @@ let numberList = []
 let equation = []
 let firstNumber
 let secondNumber
-let currentOperator
+let currentOperator = []
 let calculation = []
 
 function add(a, b){
@@ -47,13 +47,30 @@ for (let i = 0; i < 10; i++){
 let operatorCount = 0
 for (let i = 0; i < operatorButtons.length; i++){
         operatorButtons[i].addEventListener('click', () => {
-            currentOperator = operatorButtons[i].id
+            currentOperator.push(operatorButtons[i].id)
             equation.push(Number(display.value))
 
             if (equation.length > 1){
-                equation.reduce((a, b) => display.value = a + b)
-                equation = []
+                equation.reduce((a, b) => {
+                    if (currentOperator[0] == 'add') {
+                        display.value = operate(add, Number(a), Number(b))
+                        currentOperator.shift()
+                    } else if (currentOperator[0] == 'subtract') {
+                        display.value = operate(subtract, Number(a), Number(b))
+                        currentOperator.shift()
+                    } else if (currentOperator[0] == 'multiply') {
+                        display.value = operate(multiply, Number(a), Number(b))
+                        currentOperator.shift()
+                    } else if (currentOperator[0] == 'divide') {
+                        display.value = operate(divide, Number(a), Number(b))
+                        currentOperator.shift()
+                    }
+                })
+                equation = [Number(display.value)]
             }
+
+            operatorCount++
+            console.log(currentOperator)
             console.log(equation)
         })
 }
