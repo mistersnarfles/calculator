@@ -6,6 +6,7 @@ const results = document.getElementById('results')
 const buttons = document.querySelectorAll('button')
 const operatorButtons = document.getElementsByClassName('operator-buttons')
 const equalSign = document.getElementById('equal-sign')
+const decimal = document.getElementById('decimal')
 let numberList = []
 let equation = []
 let firstNumber = []
@@ -43,6 +44,13 @@ for (let i = 0; i < 10; i++){
         display.value = firstNumber.join('')
     })
 }
+
+decimal.addEventListener('click', () => {
+    firstNumber.push(decimal.textContent)
+    display.value = firstNumber.join('')
+    console.log('working')
+})
+
 let operatorCount = 0
 for (let i = 0; i < operatorButtons.length; i++){
         operatorButtons[i].addEventListener('click', () => {
@@ -53,18 +61,16 @@ for (let i = 0; i < operatorButtons.length; i++){
                 equation.reduce((a, b) => {
                     if (currentOperator[0] == 'add') {
                         display.value = operate(add, Number(a), Number(b))
-                        currentOperator.shift()
                     } else if (currentOperator[0] == 'subtract') {
                         display.value = operate(subtract, Number(a), Number(b))
-                        currentOperator.shift()
                     } else if (currentOperator[0] == 'multiply') {
                         display.value = operate(multiply, Number(a), Number(b))
-                        currentOperator.shift()
                     } else if (currentOperator[0] == 'divide') {
                         display.value = operate(divide, Number(a), Number(b))
-                        currentOperator.shift()
                     }
                 })
+                equalOperator = currentOperator.shift()
+                currentOperator.shift()
                 equation = [Number(display.value)]
             }
 
@@ -74,23 +80,27 @@ for (let i = 0; i < operatorButtons.length; i++){
         })
 }
 
-
+let equalOperator
+let lastValue = []
 equalSign.addEventListener('click', () => {
-    secondNumber = display.value
-    if (currentOperator == 'add') {
-        display.value = operate(add, Number(firstNumber), Number(secondNumber))
-    } else if (currentOperator == 'subtract') {
-        display.value = operate(subtract, Number(firstNumber), Number(secondNumber))
-    } else if (currentOperator == 'multiply') {
-        display.value = operate(multiply, Number(firstNumber), Number(secondNumber))
-    } else if (currentOperator == 'divide') {
-        display.value = operate(divide, Number(firstNumber), Number(secondNumber))
+    console.log(equalOperator)
+    lastValue.push(Number(display.value))
+    if (equalOperator == 'add') {
+        display.value = operate(add, lastValue[0], equation[0])
+    } else if (equalOperator == 'subtract') {
+        display.value = operate(subtract, lastValue[0], equation[0])
+    } else if (equalOperator == 'multiply') {
+        display.value = operate(multiply, lastValue[0], equation[0])
+    } else if (equalOperator == 'divide') {
+        display.value = operate(divide, lastValue[0], equation[0])
     }
 })
 
 clear.addEventListener('click', () => {
+    lastValue = []
     currentOperator = []
     equation = []
+    equalCounter = 0
     display.value = ''
 })
 
