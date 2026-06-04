@@ -31,7 +31,23 @@ function divide(a, b){
 }
 
 function operate(operator, a, b){
-    return operator(a, b)
+    if (operator(a, b) % 1 == 0){
+        return operator(a, b)
+    } else {
+        return operator(a, b).toFixed(2) 
+    }
+}
+
+function equationByOperator(array, el, a, b){
+    if (currentOperator[0] == 'add') {
+        display.value = operate(add, Number(a), Number(b))
+    } else if (currentOperator[0] == 'subtract') {
+        display.value = operate(subtract, Number(a), Number(b))
+    } else if (currentOperator[0] == 'multiply') {
+        display.value = operate(multiply, Number(a), Number(b))
+    } else if (currentOperator[0] == 'divide') {
+        display.value = operate(divide, Number(a), Number(b))
+    }
 }
 
 for (let i = 0; i < 10; i++){
@@ -45,10 +61,13 @@ for (let i = 0; i < 10; i++){
     })
 }
 
+let decimalCounter = 0
 decimal.addEventListener('click', () => {
-    firstNumber.push(decimal.textContent)
-    display.value = firstNumber.join('')
-    console.log('working')
+    if (decimalCounter == 0){
+        firstNumber.push(decimal.textContent)
+        display.value = firstNumber.join('')
+    }
+    decimalCounter++
 })
 
 let operatorCount = 0
@@ -56,6 +75,7 @@ for (let i = 0; i < operatorButtons.length; i++){
         operatorButtons[i].addEventListener('click', () => {
             firstNumber = []
             currentOperator.push(operatorButtons[i].id)
+            decimalCounter = 0
             equation.push(Number(display.value))
             if (equation.length > 1){
                 equation.reduce((a, b) => {
@@ -81,9 +101,13 @@ for (let i = 0; i < operatorButtons.length; i++){
 }
 
 let equalOperator
+let equalCounter = 0
 let lastValue = []
 equalSign.addEventListener('click', () => {
-    console.log(equalOperator)
+    if (equalCounter == 0){
+        display.value = equation[0] + Number(display.value)
+    }
+
     lastValue.push(Number(display.value))
     if (equalOperator == 'add') {
         display.value = operate(add, lastValue[0], equation[0])
@@ -94,9 +118,12 @@ equalSign.addEventListener('click', () => {
     } else if (equalOperator == 'divide') {
         display.value = operate(divide, lastValue[0], equation[0])
     }
+        equalCounter++
+
 })
 
 clear.addEventListener('click', () => {
+    firstNumber = []
     lastValue = []
     currentOperator = []
     equation = []
