@@ -65,9 +65,11 @@ function enableBtn(array, el) {
 
 for (let i = 0; i < 10; i++){
     const button = document.createElement('button')
+    button.classList.add('numbers')
     button.textContent = i
     numberList.push(button.textContent)
     buttonContainer.appendChild(button)
+
     button.addEventListener('click', () => {
         firstNumber.push(i)
         display.value = firstNumber.join('')
@@ -122,6 +124,7 @@ for (let i = 0; i < operatorButtons.length; i++){
 
 equalSign.addEventListener('click', () => {
     equation.push(Number(display.value))
+
     if (equation.length > 1){
         equation.reduce((a, b) => {
             equationByOperator(currentOperator, 0, a, b)
