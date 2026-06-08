@@ -39,16 +39,29 @@ function operate(operator, a, b){
 }
 
 function equationByOperator(array, el, a, b){
-    if (currentOperator[0] == 'add') {
-        display.value = operate(add, Number(a), Number(b))
-    } else if (currentOperator[0] == 'subtract') {
-        display.value = operate(subtract, Number(a), Number(b))
-    } else if (currentOperator[0] == 'multiply') {
-        display.value = operate(multiply, Number(a), Number(b))
-    } else if (currentOperator[0] == 'divide') {
-        display.value = operate(divide, Number(a), Number(b))
+    if (array[el] == 'divide' && Number(b) == 0){
+        return display.value = 'NICE TRY'
+    }
+
+    if (array[el] == 'add') {
+        return display.value = operate(add, Number(a), Number(b))
+    } else if (array[el] == 'subtract') {
+        return display.value = operate(subtract, Number(a), Number(b))
+    } else if (array[el] == 'multiply') {
+        return display.value = operate(multiply, Number(a), Number(b))
+    } else if (array[el] == 'divide') {
+        return display.value = operate(divide, Number(a), Number(b))
     }
 }
+
+function disableBtn(array, el) {
+    array[el].disabled = true;
+}
+
+function enableBtn(array, el) {
+    array[el].disabled = false;
+}
+
 
 for (let i = 0; i < 10; i++){
     const button = document.createElement('button')
@@ -58,6 +71,13 @@ for (let i = 0; i < 10; i++){
     button.addEventListener('click', () => {
         firstNumber.push(i)
         display.value = firstNumber.join('')
+        operatorCount = 0
+        if (operatorCount == 0) {
+            for (elem of operatorButtons) {
+                elem.disabled = false
+            }
+        }
+        console.log(operatorCount)
     })
 }
 
@@ -71,55 +91,44 @@ decimal.addEventListener('click', () => {
 })
 
 let operatorCount = 0
+
+
 for (let i = 0; i < operatorButtons.length; i++){
         operatorButtons[i].addEventListener('click', () => {
+            operatorCount++
+            if (operatorCount == 1) {
+                for (elem of operatorButtons) {
+                    elem.disabled = true
+                }
+            }
+
+
             firstNumber = []
             currentOperator.push(operatorButtons[i].id)
-            decimalCounter = 0
             equation.push(Number(display.value))
             if (equation.length > 1){
                 equation.reduce((a, b) => {
-                    if (currentOperator[0] == 'add') {
-                        display.value = operate(add, Number(a), Number(b))
-                    } else if (currentOperator[0] == 'subtract') {
-                        display.value = operate(subtract, Number(a), Number(b))
-                    } else if (currentOperator[0] == 'multiply') {
-                        display.value = operate(multiply, Number(a), Number(b))
-                    } else if (currentOperator[0] == 'divide') {
-                        display.value = operate(divide, Number(a), Number(b))
-                    }
+                    equationByOperator(currentOperator, 0, a, b)
                 })
-                equalOperator = currentOperator.shift()
                 currentOperator.shift()
                 equation = [Number(display.value)]
             }
 
-            operatorCount++
+            console.log(operatorCount)
             console.log(currentOperator)
             console.log(equation)
         })
 }
 
-let equalOperator
-let equalCounter = 0
-let lastValue = []
 equalSign.addEventListener('click', () => {
-    if (equalCounter == 0){
-        display.value = equation[0] + Number(display.value)
-    }
-
-    lastValue.push(Number(display.value))
-    if (equalOperator == 'add') {
-        display.value = operate(add, lastValue[0], equation[0])
-    } else if (equalOperator == 'subtract') {
-        display.value = operate(subtract, lastValue[0], equation[0])
-    } else if (equalOperator == 'multiply') {
-        display.value = operate(multiply, lastValue[0], equation[0])
-    } else if (equalOperator == 'divide') {
-        display.value = operate(divide, lastValue[0], equation[0])
-    }
-        equalCounter++
-
+    equation.push(Number(display.value))
+    if (equation.length > 1){
+        equation.reduce((a, b) => {
+            equationByOperator(currentOperator, 0, a, b)
+        })
+        currentOperator.shift()
+        equation = [Number(display.value)]
+    }   
 })
 
 clear.addEventListener('click', () => {
@@ -129,6 +138,8 @@ clear.addEventListener('click', () => {
     equation = []
     equalCounter = 0
     display.value = ''
+    equalSign.disabled = false
 })
+
 
 
