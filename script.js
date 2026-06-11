@@ -7,6 +7,7 @@ const buttons = document.querySelectorAll('button')
 const operatorButtons = document.getElementsByClassName('operator-buttons')
 const equalSign = document.getElementById('equal-sign')
 const decimal = document.getElementById('decimal')
+const numbers = document.getElementsByClassName('numbers')
 let numberList = []
 let equation = []
 let firstNumber = []
@@ -54,15 +55,22 @@ function equationByOperator(array, el, a, b){
     }
 }
 
-function disableBtn(array, el) {
-    array[el].disabled = true;
+for (let i = 0; i < numbers.length; i++) {
+    numbers[i].addEventListener('click', () => {
+        numberList.push(numbers[i].textContent)
+        firstNumber.push(numbers[i].textContent)
+        display.value = firstNumber.join('')
+        operatorCount = 0
+        if (operatorCount == 0) {
+            for (elem of operatorButtons) {
+                elem.disabled = false
+            }
+        }
+        console.log(operatorCount)
+        console.log(firstNumber)
+    })
 }
-
-function enableBtn(array, el) {
-    array[el].disabled = false;
-}
-
-
+/*
 for (let i = 0; i < 10; i++){
     const button = document.createElement('button')
     button.classList.add('numbers')
@@ -82,7 +90,7 @@ for (let i = 0; i < 10; i++){
         console.log(operatorCount)
     })
 }
-
+*/
 let decimalCounter = 0
 decimal.addEventListener('click', () => {
     if (decimalCounter == 0){
@@ -123,6 +131,12 @@ for (let i = 0; i < operatorButtons.length; i++){
 }
 
 equalSign.addEventListener('click', () => {
+    operatorCount++
+    if (operatorCount == 1) {
+        for (elem of operatorButtons) {
+            elem.disabled = true
+        }
+    }
     equation.push(Number(display.value))
 
     if (equation.length > 1){
@@ -142,6 +156,7 @@ clear.addEventListener('click', () => {
     equalCounter = 0
     display.value = ''
     equalSign.disabled = false
+    operatorCount = 0
 })
 
 
