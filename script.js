@@ -97,7 +97,10 @@ decimal.addEventListener('click', () => {
         firstNumber.push(decimal.textContent)
         display.value = firstNumber.join('')
     }
-    decimalCounter++
+    console.log(decimalCounter)
+    if (decimal.id == 'decimal') {
+        decimalCounter++
+    }
 })
 
 let operatorCount = 0
@@ -105,6 +108,7 @@ let operatorCount = 0
 
 for (let i = 0; i < operatorButtons.length; i++){
         operatorButtons[i].addEventListener('click', () => {
+            decimalCounter = 0
             operatorCount++
             if (operatorCount == 1) {
                 for (elem of operatorButtons) {
@@ -157,6 +161,7 @@ clear.addEventListener('click', () => {
     display.value = ''
     equalSign.disabled = false
     operatorCount = 0
+    decimalCounter = 0
 })
 
 
